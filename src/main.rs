@@ -1,10 +1,12 @@
-use std::env;
+use std::{env, process::exit};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
         eprintln!("Insufficient arguments!");
+
+        exit(-1);
     }
 
     let port_name = &args[1];
