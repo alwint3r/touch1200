@@ -129,13 +129,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a3f87b73ce11b1619a3c6332f45341e0047173771e8b8b73f87bfeefb7b56244"
 
 [[package]]
-name = "serial-port"
-version = "0.1.0"
-dependencies = [
- "serialport",
-]
-
-[[package]]
 name = "serialport"
 version = "4.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -150,6 +143,13 @@ dependencies = [
  "nix",
  "regex",
  "winapi",
+]
+
+[[package]]
+name = "touch1200"
+version = "0.1.0"
+dependencies = [
+ "serialport",
 ]
 
 [[package]]
