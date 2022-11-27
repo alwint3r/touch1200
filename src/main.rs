@@ -11,8 +11,10 @@ fn main() {
 
     let port_name = &args[1];
 
-    let mut port = serialport::new(port_name, 1200)
-        .open()
-        .unwrap();
-    port.write_data_terminal_ready(false).unwrap();
+    if let Ok(mut port) = serialport::new(port_name, 1200).open() {
+        port.write_data_terminal_ready(false).unwrap();
+    } else {
+        eprintln!("Serial port {} is not found!", port_name);
+        exit(-1);
+    }
 }
