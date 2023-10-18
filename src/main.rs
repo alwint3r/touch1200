@@ -1,20 +1,25 @@
-use std::{env, process::exit};
+use clap::Parser;
+use std::{process::exit, thread::sleep, time::Duration};
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[arg(short, long)]
+    port: String,
+
+    #[arg(short, long)]
+    dtr: bool,
+}
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let args = Args::parse();
 
-    if args.len() < 2 {
-        eprintln!("Insufficient arguments!");
+    if let Ok(mut port) = serialport::new(args.port.clone(), 1200).open() {
+        port.write_data_terminal_ready(args.dtr).unwrap();
 
-        exit(-1);
-    }
-
-    let port_name = &args[1];
-
-    if let Ok(mut port) = serialport::new(port_name, 1200).open() {
-        port.write_data_terminal_ready(false).unwrap();
+        sleep(Duration::from_secs(3));
     } else {
-        eprintln!("Serial port {} is not found!", port_name);
+        eprintln!("Serial port {} is not found!", args.port);
         exit(-1);
     }
 }
